@@ -180,7 +180,7 @@ void remove_comments(char *);
 
 /* toem_builtin.c */
 int exitShell(info_t *cmdInfo);
-int _mycd(info_t *);
+int changeCurrentDirectory(info_t *shellInfo);
 int _myhelp(info_t *);
 
 /* toem_builtin1.c */

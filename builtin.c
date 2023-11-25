@@ -34,56 +34,62 @@ int exitShell(info_t *cmdInfo)
 	return (-2);
 }
 
-
 /**
- * _mycd - changes the current directory of the process
- * @info: Structure containing potential arguments. Used to maintain
- *	constant function prototype.
- *	Return: Always 0
+ * changeCurrentDirectory - Change the current directory of the process.
+ *
+ * @shellInfo Structure containing potential arguments.
+ *                  Used to maintain a constant function prototype.
+ * Return: Always returns 0.
  */
-int _mycd(info_t *info)
+int changeCurrentDirectory(info_t *shellInfo)
 {
-	char *s, *dir, buffer[1024];
-	int chdir_ret;
+    char *currentDir, *newDir, directoryBuffer[1024];
+    int chdirResult;
 
-	s = getcwd(buffer, 1024);
-	if (!s)
-		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->argv[1])
-	{
-		dir = _getenv(info, "HOME=");
-		if (!dir)
-			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
-		else
-			chdir_ret = chdir(dir);
-	}
-	else if (_strcmp(info->argv[1], "-") == 0)
-	{
-		if (!_getenv(info, "OLDPWD="))
-		{
-			_puts(s);
-			_putchar('\n');
-			return (1);
-		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
-	}
-	else
-		chdir_ret = chdir(info->argv[1]);
-	if (chdir_ret == -1)
-	{
-		print_error(info, "can't cd to ");
-		_eputs(info->argv[1]), _eputchar('\n');
-	}
-	else
-	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
-	}
-	return (0);
+    currentDir = getcwd(directoryBuffer, 1024);
+    if (!currentDir)
+        _puts("TODO: >>getcwd failure emsg here<<\n");
+
+    if (!shellInfo->argv[1])
+    {
+        newDir = _getenv(shellInfo, "HOME=");
+        if (!newDir)
+            chdirResult = /* TODO: what should this be? */
+                chdir((newDir = _getenv(shellInfo, "PWD=")) ? newDir : "/");
+        else
+            chdirResult = chdir(newDir);
+    }
+    else if (_strcmp(shellInfo->argv[1], "-") == 0)
+    {
+        if (!_getenv(shellInfo, "OLDPWD="))
+        {
+            _puts(currentDir);
+            _putchar('\n');
+            return 1;
+        }
+        _puts(_getenv(shellInfo, "OLDPWD=")), _putchar('\n');
+        chdirResult = /* TODO: what should this be? */
+            chdir((newDir = _getenv(shellInfo, "OLDPWD=")) ? newDir : "/");
+    }
+    else
+    {
+        chdirResult = chdir(shellInfo->argv[1]);
+    }
+
+    if (chdirResult == -1)
+    {
+        print_error(shellInfo, "can't cd to ");
+        _eputs(shellInfo->argv[1]), _eputchar('\n');
+    }
+    else
+    {
+        _setenv(shellInfo, "OLDPWD", _getenv(shellInfo, "PWD="));
+        _setenv(shellInfo, "PWD", getcwd(directoryBuffer, 1024));
+    }
+
+    return 0;
 }
+
 
 /**
  * _myhelp - changes the current directory of the process
