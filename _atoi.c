@@ -5,7 +5,7 @@
  * checkInteractiveMode - Check if the shell is in interactive mode.
  *
  * @info: Pointer to the information struct.
- * @isInteractiveMode: Return: checkInteractiveMode
+ * isInteractiveMode: Return: checkInteractiveMode
  */
 
 int checkInteractiveMode(info_t *info)
@@ -26,17 +26,22 @@ return (isInteractiveMode);
 
 
 /**
- * is_delim - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
- * Return: 1 if true, 0 if false
+ * Check if a character is a delimiter.
+ *
+ * @character The character to check.
+ * @delimiter The delimiter string.
+ * return: Returns 1 if the character is a delimiter, 0 otherwise.
  */
-int is_delim(char c, char *delim)
+int isDelimiter(char character, char *delimiter) 
 {
-	while (*delim)
-		if (*delim++ == c)
-			return (1);
-	return (0);
+    do {
+        if (*delimiter == character) 
+	{
+            return (1); /* Character is a delimiter */
+        }
+    } while (*delimiter++);
+
+    return (0); /* Character is not a delimiter */
 }
 
 /**

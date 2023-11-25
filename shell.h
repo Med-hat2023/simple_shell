@@ -163,7 +163,8 @@ int bfree(void **);
 /* toem_atoi.c */
 /*int interactive(info_t *);*/
 int checkInteractiveMode(info_t *info);
-int is_delim(char, char *);
+/**int is_delim(char, char *);*/
+int isDelimiter(char character, char *delimiter);
 int _isalpha(int);
 int _atoi(char *);
 
