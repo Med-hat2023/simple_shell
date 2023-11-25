@@ -1,15 +1,29 @@
 #include "shell.h"
+#include <unistd.h>
 
 /**
- * interactive - returns true if shell is interactive mode
- * @info: struct address
+ * checkInteractiveMode - Check if the shell is in interactive mode.
  *
- * Return: 1 if interactive mode, 0 otherwise
+ * @info: Pointer to the information struct.
+ * @isInteractiveMode: Return: checkInteractiveMode
  */
-int interactive(info_t *info)
+
+int checkInteractiveMode(info_t *info)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	/* Step 1: Check if stdin is associated with a terminal*/
+int isStdinTerminal = isatty(STDIN_FILENO);
+
+	/* Step 2: Check if readfd is less than or equal to 2*/
+int isReadfdValid = info->readfd <= 2;
+
+	/* Step 3: Combine the results of Step 1 and Step 2*/
+int isInteractiveMode = isStdinTerminal && isReadfdValid;
+
+	/* Step 4: Return the final result*/
+return (isInteractiveMode);
 }
+
+
 
 /**
  * is_delim - checks if character is a delimeter
@@ -50,7 +64,7 @@ int _atoi(char *s)
 	int i, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (i = 0;  s[i] != '\0' && flag != 2; i++)
+	for (i = 0;	s[i] != '\0' && flag != 2; i++)
 	{
 		if (s[i] == '-')
 			sign *= -1;
