@@ -32,13 +32,13 @@ int hsh(info_t *info, char **av)
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!checkInteractiveMode(info) && info->status)
-		exit(info->status);
+	if (!checkInteractiveMode(info) && info->exitStatus)
+		exit(info->exitStatus);
 	if (builtin_ret == -2)
 	{
-		if (info->err_num == -1)
-			exit(info->status);
-		exit(info->err_num);
+		if (info->exitErrorNumber == -1)
+			exit(info->exitStatus);
+		exit(info->exitErrorNumber);
 	}
 	return (builtin_ret);
 }
@@ -56,7 +56,7 @@ int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
-		{"exit", _myexit},
+		{"exit", exitShell},
 		{"env", _myenv},
 		{"help", _myhelp},
 		{"history", _myhistory},
@@ -113,7 +113,7 @@ void find_cmd(info_t *info)
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
-			info->status = 127;
+			info->exitStatus = 127;
 			print_error(info, "not found\n");
 		}
 	}
@@ -149,11 +149,11 @@ void fork_cmd(info_t *info)
 	}
 	else
 	{
-		wait(&(info->status));
-		if (WIFEXITED(info->status))
+		wait(&(info->exitStatus));
+		if (WIFEXITED(info->exitStatus))
 		{
-			info->status = WEXITSTATUS(info->status);
-			if (info->status == 126)
+			info->exitStatus = WEXITSTATUS(info->exitStatus);
+			if (info->exitStatus == 126)
 				print_error(info, "Permission denied\n");
 		}
 	}

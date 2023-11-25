@@ -1,39 +1,45 @@
 #include "shell.h"
 
 /**
- * _myexit - exits the shell
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: exits with a given exit status
- *         (0) if info.argv[0] != "exit"
+ * exitShell - Exit the shell with a specified exit status.
+ *
+ * @cmdInfo: Structure containing potential arguments.
+ *	Used to maintain a constant function prototype.
+ * Return: Exits with a given exit status (0)
+ *	if cmdInfo->commandArguments[0] != "exit".
  */
-int _myexit(info_t *info)
+int exitShell(info_t *cmdInfo)
 {
-	int exitcheck;
+	int exitCode;
 
-	if (info->argv[1])  /* If there is an exit arguement */
+	/* Check if there is an exit argument */
+	if (cmdInfo->argv[1])
 	{
-		exitcheck = _erratoi(info->argv[1]);
-		if (exitcheck == -1)
-		{
-			info->status = 2;
-			print_error(info, "Illegal number: ");
-			_eputs(info->argv[1]);
-			_eputchar('\n');
-			return (1);
-		}
-		info->err_num = _erratoi(info->argv[1]);
-		return (-2);
+	exitCode = _erratoi(cmdInfo->argv[1]);
+
+	if (exitCode == -1)
+	{
+	cmdInfo->exitStatus = 2;
+	print_error(cmdInfo, "Illegal number: ");
+	_eputs(cmdInfo->argv[1]);
+	_eputchar('\n');
+	return (1);
 	}
-	info->err_num = -1;
+
+	cmdInfo->exitErrorNumber = exitCode;
+	return (-2);
+	}
+
+	cmdInfo->exitErrorNumber = (-1);
 	return (-2);
 }
+
 
 /**
  * _mycd - changes the current directory of the process
  * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ *	constant function prototype.
+ *	Return: Always 0
  */
 int _mycd(info_t *info)
 {
@@ -82,8 +88,8 @@ int _mycd(info_t *info)
 /**
  * _myhelp - changes the current directory of the process
  * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- *  Return: Always 0
+ *	constant function prototype.
+ *	Return: Always 0
  */
 int _myhelp(info_t *info)
 {

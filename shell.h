@@ -79,7 +79,7 @@ typedef struct passinfo
 	char *path;
 	int argc;
 	unsigned int line_count;
-	int err_num;
+	int exitErrorNumber;
 	int linecount_flag;
 	char *fname;
 	list_t *env;
@@ -87,7 +87,7 @@ typedef struct passinfo
 	list_t *alias;
 	char **environ;
 	int env_changed;
-	int status;
+	int exitStatus;
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
@@ -179,7 +179,7 @@ char *convert_number(long int, int, int);
 void remove_comments(char *);
 
 /* toem_builtin.c */
-int _myexit(info_t *);
+int exitShell(info_t *cmdInfo);
 int _mycd(info_t *);
 int _myhelp(info_t *);
 
