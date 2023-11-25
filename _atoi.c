@@ -57,36 +57,39 @@ return (islower(character) || isupper(character) ? 1 : 0);
 }
 
 
+
 /**
- *_atoi - converts a string to an integer
- *@s: the string to be converted
- *Return: 0 if no numbers in string, converted number otherwise
+ *stringToIntConverter - Convert a string to an integer.
+ *
+ * @inputString: The string to be converted.
+ * Return:finalResult converted integer if valid,
+ *	or 0 if no numbers in the string.
  */
-
-int _atoi(char *s)
+int stringToIntConverter(char *inputString)
 {
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
+	int index, signMultiplier = 1, digitFlag = 0, finalResult;
+	unsigned int currentResult = 0;
 
-	for (i = 0;	s[i] != '\0' && flag != 2; i++)
+	for (index = 0; inputString[index] != '\0' && digitFlag != 2; index++)
 	{
-		if (s[i] == '-')
-			sign *= -1;
+	if (inputString[index] == '-')
+	signMultiplier *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			flag = 1;
-			result *= 10;
-			result += (s[i] - '0');
-		}
-		else if (flag == 1)
-			flag = 2;
+	if (isdigit(inputString[index]))
+	{
+	digitFlag = 1;
+	currentResult *= 10;
+	currentResult += (inputString[index] - '0');
+	}
+	else if (digitFlag == 1)
+	digitFlag = 2;
 	}
 
-	if (sign == -1)
-		output = -result;
+	if (signMultiplier == -1)
+	finalResult = -currentResult;
 	else
-		output = result;
+	finalResult = currentResult;
 
-	return (output);
+	return (finalResult);
 }
+

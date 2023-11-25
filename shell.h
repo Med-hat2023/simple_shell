@@ -167,9 +167,11 @@ int checkInteractiveMode(info_t *info);
 int isDelimiter(char character, char *delimiter);
 /*int _isalpha(int);*/
 int isAlphabetic(int character);
-int _atoi(char *);
+/*int _atoi(char *);*/
+int stringToIntConverter(char *inputString);
 
 /* toem_errors1.c */
+
 int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(int, int);
