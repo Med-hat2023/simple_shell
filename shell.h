@@ -181,7 +181,7 @@ void remove_comments(char *);
 /* toem_builtin.c */
 int exitShell(info_t *cmdInfo);
 int changeCurrentDirectory(info_t *shellInfo);
-int _myhelp(info_t *);
+int displayShellHelp(info_t *commandInfo);
 
 /* toem_builtin1.c */
 int _myhistory(info_t *);
