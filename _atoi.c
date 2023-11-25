@@ -1,6 +1,6 @@
 #include "shell.h"
 #include <unistd.h>
-
+#include <ctype.h>
 /**
  * checkInteractiveMode - Check if the shell is in interactive mode.
  *
