@@ -97,35 +97,41 @@ int display_entry(list_t *displayed_entry)
 
 
 /**
- * _myalias - mimics the alias builtin (man alias)
- * @info: Structure containing potential arguments. Used to maintain
+ * execute_alias_operations - performs operations similar to
+ * the alias built-in (man alias)
+ * @arguments_info: Structure containing potential arguments. Used to maintain
  *	constant function prototype.
- *	Return: Always 0
+ *
+ * Return: Always (0)
  */
-int _myalias(info_t *info)
+int execute_alias_operations(info_t *arguments_info)
 {
-	int i = 0;
-	char *p = NULL;
-	list_t *node = NULL;
+	int index = 0;
+	char *position = NULL;
+	list_t *current_entry = NULL;
 
-	if (info->argc == 1)
+	if (arguments_info->argc == 1)
 	{
-		node = info->alternateName;
-		while (node)
-		{
-			display_entry(node);
-			node = node->next;
-		}
-		return (0);
+	current_entry = arguments_info->alternateName;
+	do {
+	display_entry(current_entry);
+	current_entry = current_entry->next;
+	} while (current_entry);
+	return (0);
 	}
-	for (i = 1; info->argv[i]; i++)
-	{
-		p = _strchr(info->argv[i], '=');
-		if (p)
-			associate_string_with_alias(info, info->argv[i]);
-		else
-			display_entry(node_starts_with(info->alternateName, info->argv[i], '='));
-	}
+
+	index = 1;
+	do {
+	position = _strchr(arguments_info->argv[index], '=');
+	if (position)
+	associate_string_with_alias(arguments_info, arguments_info->argv[index]);
+	else
+	display_entry(node_starts_with(arguments_info->alternateName,
+					arguments_info->argv[index], '='));
+
+	index++;
+	} while (arguments_info->argv[index]);
 
 	return (0);
 }
+

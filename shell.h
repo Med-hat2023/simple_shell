@@ -188,7 +188,7 @@ int displayCommandLog(info_t *shellInfo);
 int dissolve_alias_connection(info_t *data_info, char *target_sequence);
 int associate_string_with_alias(info_t *data_info, char *target_sequence);
 int display_entry(list_t *displayed_entry);
-int _myalias(info_t *);
+int execute_alias_operations(info_t *arguments_info);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);

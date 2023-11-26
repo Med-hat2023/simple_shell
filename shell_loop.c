@@ -63,7 +63,7 @@ int find_builtin(info_t *info)
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
 		{"cd", changeCurrentDirectory},
-		{"alias", _myalias},
+		{"alias", execute_alias_operations},
 		{NULL, NULL}
 	};
 
