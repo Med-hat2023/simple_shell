@@ -59,7 +59,7 @@ int find_builtin(info_t *info)
 		{"exit", exitShell},
 		{"env", _myenv},
 		{"help", displayShellHelp},
-		{"history", _myhistory},
+		{"history", displayCommandLog},
 		{"setenv", _mysetenv},
 		{"unsetenv", _myunsetenv},
 		{"cd", changeCurrentDirectory},

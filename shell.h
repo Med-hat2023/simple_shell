@@ -83,8 +83,8 @@ typedef struct passinfo
 	int linecount_flag;
 	char *fname;
 	list_t *env;
-	list_t *history;
-	list_t *alias;
+	list_t *commandList;
+	list_t *alternateName;
 	char **environ;
 	int env_changed;
 	int exitStatus;
@@ -161,13 +161,13 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c ********************************/
-/*int interactive(info_t *);*/
+
 int checkInteractiveMode(info_t *info);
-/**int is_delim(char, char *);*/
+
 int isDelimiter(char character, char *delimiter);
-/*int _isalpha(int);*/
+
 int isAlphabetic(int character);
-/*int _atoi(char *);*/
+
 int stringToIntConverter(char *inputString);
 
 /* toem_errors1.c */
@@ -184,7 +184,8 @@ int changeCurrentDirectory(info_t *shellInfo);
 int displayShellHelp(info_t *commandInfo);
 
 /* toem_builtin1.c */
-int _myhistory(info_t *);
+int displayCommandLog(info_t *shellInfo);
+int dissolve_alias_connection(info_t *data_info, char *target_sequence);
 int _myalias(info_t *);
 
 /*toem_getline.c */

@@ -43,7 +43,7 @@ int write_history(info_t *info)
 	free(filename);
 	if (fd == -1)
 		return (-1);
-	for (node = info->history; node; node = node->next)
+	for (node = info->commandList; node; node = node->next)
 	{
 		_putsfd(node->str, fd);
 		_putfd('\n', fd);
@@ -97,7 +97,7 @@ int read_history(info_t *info)
 	free(buf);
 	info->histcount = linecount;
 	while (info->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(info->history), 0);
+		delete_node_at_index(&(info->commandList), 0);
 	renumber_history(info);
 	return (info->histcount);
 }
@@ -114,12 +114,12 @@ int build_history_list(info_t *info, char *buf, int linecount)
 {
 	list_t *node = NULL;
 
-	if (info->history)
-		node = info->history;
+	if (info->commandList)
+		node = info->commandList;
 	add_node_end(&node, buf, linecount);
 
-	if (!info->history)
-		info->history = node;
+	if (!info->commandList)
+		info->commandList = node;
 	return (0);
 }
 
@@ -131,7 +131,7 @@ int build_history_list(info_t *info, char *buf, int linecount)
  */
 int renumber_history(info_t *info)
 {
-	list_t *node = info->history;
+	list_t *node = info->commandList;
 	int i = 0;
 
 	while (node)
