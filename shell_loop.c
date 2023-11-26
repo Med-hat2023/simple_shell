@@ -60,7 +60,7 @@ int find_builtin(info_t *info)
 		{"env", displayEnvironment},
 		{"help", displayShellHelp},
 		{"history", displayCommandLog},
-		{"setenv", _mysetenv},
+		{"setenv", updateOrCreateEnvVariable},
 		{"unsetenv", _myunsetenv},
 		{"cd", changeCurrentDirectory},
 		{"alias", execute_alias_operations},

@@ -205,8 +205,7 @@ void free_info(info_t *, int);
 int displayEnvironment(info_t *context);
 
 char *findEnvironmentValue(info_t *context, const char *varName);
-
-int _mysetenv(info_t *);
+int updateOrCreateEnvVariable(info_t *information);
 int _myunsetenv(info_t *);
 int populate_env_list(info_t *);
 

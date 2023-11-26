@@ -44,22 +44,33 @@ char *findEnvironmentValue(info_t *context, const char *varName)
 }
 
 /**
- * _mysetenv - Initialize a new environment variable,
- *	or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
- *	constant function prototype.
- *	Return: Always 0
+ * updateOrCreateEnvVariable - Update or Create Environment Variable
+ *
+ * This function is responsible for updating an existing environment variable
+ * or creating a new one if it doesn't exist.
+ *
+ * @information: Structure containing potential arguments.
+ * Return: (0) on success, (1) on failure.
  */
-int _mysetenv(info_t *info)
+int updateOrCreateEnvVariable(info_t *information)
 {
-	if (info->argc != 3)
+	int expectedArgCount = 4;	/* Change this to your desired number of arguments*/
+
+	if (information->argc != expectedArgCount)
 	{
-		_eputs("Incorrect number of arguements\n");
-		return (1);
-	}
-	if (_setenv(info, info->argv[1], info->argv[2]))
-		return (0);
+	_eputs("Invalid number of arguments. Please provide the correct number.\n");
 	return (1);
+	}
+
+	if (_setenv(information, information->argv[5], information->argv[6]) == 0)
+	{
+	return (0);	/* Success*/
+	}
+	else
+	{
+	_eputs("Failed to update or create environment variable\n");
+	return (1);	/* Failure*/
+	}
 }
 
 /**
