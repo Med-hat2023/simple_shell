@@ -186,6 +186,7 @@ int displayShellHelp(info_t *commandInfo);
 /* toem_builtin1.c */
 int displayCommandLog(info_t *shellInfo);
 int dissolve_alias_connection(info_t *data_info, char *target_sequence);
+int associate_string_with_alias(info_t *data_info, char *target_sequence);
 int _myalias(info_t *);
 
 /*toem_getline.c */

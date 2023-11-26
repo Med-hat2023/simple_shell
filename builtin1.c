@@ -40,24 +40,31 @@ int dissolve_alias_connection(info_t *data_info, char *target_sequence)
 
 
 /**
- * set_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
+ * associate_string_with_alias- maps a string to an alias
+ * @data_info: Information structure
+ * @target_sequence: The string representing the alias
  *
- * Return: Always 0 on success, 1 on error
+ * Return: 0 on success, 1 on error
  */
-int set_alias(info_t *info, char *str)
+int associate_string_with_alias(info_t *data_info, char *target_sequence)
 {
-	char *p;
+	char *position = _strchr(target_sequence, '=');
 
-	p = _strchr(str, '=');
-	if (!p)
-		return (1);
-	if (!*++p)
-		return (dissolve_alias_connection(info, str));
-
-	dissolve_alias_connection(info, str);
-	return (add_node_end(&(info->alternateName), str, 0) == NULL);
+	if (position == NULL)
+	{
+	return (1);
+	}
+	else if
+		(*++position == '\0')
+	{
+	return (dissolve_alias_connection(data_info, target_sequence));
+	}
+	else
+	{
+	dissolve_alias_connection(data_info, target_sequence);
+	return (add_node_end(&(data_info->alternateName),
+				target_sequence, 0) == NULL);
+	}
 }
 
 /**
@@ -109,7 +116,7 @@ int _myalias(info_t *info)
 	{
 		p = _strchr(info->argv[i], '=');
 		if (p)
-			set_alias(info, info->argv[i]);
+			associate_string_with_alias(info, info->argv[i]);
 		else
 			print_alias(node_starts_with(info->alternateName, info->argv[i], '='));
 	}
