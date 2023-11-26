@@ -43,11 +43,11 @@ extern char **environ;
  * @str: a string
  * @next: points to the next node
  */
-typedef struct liststr
+typedef struct liststring
 {
 	int num;
-	char *str;
-	struct liststr *next;
+	char *string;
+	struct liststring *next;
 } list_t;
 
 /**
@@ -187,6 +187,7 @@ int displayShellHelp(info_t *commandInfo);
 int displayCommandLog(info_t *shellInfo);
 int dissolve_alias_connection(info_t *data_info, char *target_sequence);
 int associate_string_with_alias(info_t *data_info, char *target_sequence);
+int display_entry(list_t *displayed_entry);
 int _myalias(info_t *);
 
 /*toem_getline.c */

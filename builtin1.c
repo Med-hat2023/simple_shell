@@ -68,27 +68,33 @@ int associate_string_with_alias(info_t *data_info, char *target_sequence)
 }
 
 /**
- * print_alias - prints an alias string
- * @node: the alias node
+ * display_entry - prints an entry string
+ * @displayed_entry: the entry node to be displayed
  *
- * Return: Always 0 on success, 1 on error
+ * Return:(0) on success, (1) on error
  */
-int print_alias(list_t *node)
+int display_entry(list_t *displayed_entry)
 {
-	char *p = NULL, *a = NULL;
-
-	if (node)
+	if (displayed_entry)
 	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
-			_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
-		return (0);
+	char *separator = _strchr(displayed_entry->string, '=');
+	char *entry_value = displayed_entry->string;
+
+	while (entry_value <= separator)
+	{
+	_putchar(*entry_value);
+	entry_value++;
+	}
+
+	_putchar('\'');
+	_puts(separator + 1);
+	_puts("'\n");
+
+	return (0);
 	}
 	return (1);
 }
+
 
 /**
  * _myalias - mimics the alias builtin (man alias)
@@ -107,7 +113,7 @@ int _myalias(info_t *info)
 		node = info->alternateName;
 		while (node)
 		{
-			print_alias(node);
+			display_entry(node);
 			node = node->next;
 		}
 		return (0);
@@ -118,7 +124,7 @@ int _myalias(info_t *info)
 		if (p)
 			associate_string_with_alias(info, info->argv[i]);
 		else
-			print_alias(node_starts_with(info->alternateName, info->argv[i], '='));
+			display_entry(node_starts_with(info->alternateName, info->argv[i], '='));
 	}
 
 	return (0);
