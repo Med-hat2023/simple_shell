@@ -82,7 +82,7 @@ typedef struct passinfo
 	int exitErrorNumber;
 	int linecount_flag;
 	char *fname;
-	list_t *env;
+	list_t *environmentVariables;
 	list_t *commandList;
 	list_t *alternateName;
 	char **environ;
@@ -201,8 +201,11 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* toem_environ.c */
+
+int displayEnvironment(info_t *context);
+
 char *_getenv(info_t *, const char *);
-int _myenv(info_t *);
+
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
 int populate_env_list(info_t *);

@@ -126,7 +126,7 @@ int replace_vars(info_t *info)
 				_strdup(convert_number(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
+		node = node_starts_with(info->environmentVariables, &info->argv[i][1], '=');
 		if (node)
 		{
 			replace_string(&(info->argv[i]),

@@ -1,16 +1,20 @@
 #include "shell.h"
 
 /**
- * _myenv - prints the current environment
- * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
- * Return: Always 0
+ * displayEnvironment - Display the current environment variables
+ * @context: Pointer to a structure containing potential arguments.
+ *	Used to maintain a consistent function prototype.
+ * Return: Always returns 0.
  */
-int _myenv(info_t *info)
+int displayEnvironment(info_t *context)
 {
-	print_list_str(info->env);
+	if (context != NULL && context->environmentVariables != NULL)
+	{
+	print_list_str(context->environmentVariables);
+	}
 	return (0);
 }
+
 
 /**
  * _getenv - gets the value of an environ variable
@@ -21,7 +25,7 @@ int _myenv(info_t *info)
  */
 char *_getenv(info_t *info, const char *name)
 {
-	list_t *node = info->env;
+	list_t *node = info->environmentVariables;
 	char *p;
 
 	while (node)
@@ -36,10 +40,10 @@ char *_getenv(info_t *info, const char *name)
 
 /**
  * _mysetenv - Initialize a new environment variable,
- *             or modify an existing one
+ *	or modify an existing one
  * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ *	constant function prototype.
+ *	Return: Always 0
  */
 int _mysetenv(info_t *info)
 {
@@ -56,8 +60,8 @@ int _mysetenv(info_t *info)
 /**
  * _myunsetenv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
- *        constant function prototype.
- *  Return: Always 0
+ *	constant function prototype.
+ *	Return: Always 0
  */
 int _myunsetenv(info_t *info)
 {
@@ -77,7 +81,7 @@ int _myunsetenv(info_t *info)
 /**
  * populate_env_list - populates env linked list
  * @info: Structure containing potential arguments. Used to maintain
- *          constant function prototype.
+ *	constant function prototype.
  * Return: Always 0
  */
 int populate_env_list(info_t *info)
@@ -87,6 +91,6 @@ int populate_env_list(info_t *info)
 
 	for (i = 0; environ[i]; i++)
 		add_node_end(&node, environ[i], 0);
-	info->env = node;
+	info->environmentVariables = node;
 	return (0);
 }
