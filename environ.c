@@ -15,26 +15,31 @@ int displayEnvironment(info_t *context)
 	return (0);
 }
 
-
 /**
- * _getenv - gets the value of an environ variable
- * @info: Structure containing potential arguments. Used to maintain
- * @name: env var name
+ * findEnvironmentValue - Locates the value of an environment variable
+ * @context: Structure containing relevant information. Used to maintain
+ *	a consistent function prototype.
+ * @varName: Name of the environment variable.
  *
- * Return: the value
+ * Return: Returns the value of the environment variable, or NULL if not found.
  */
-char *_getenv(info_t *info, const char *name)
+char *findEnvironmentValue(info_t *context, const char *varName)
 {
-	list_t *node = info->environmentVariables;
-	char *p;
+	list_t *currentNode = context->environmentVariables;
+	char *value = NULL;
 
-	while (node)
+	do {
+	value = starts_with(currentNode->string, varName);
+	if (value && *value)
 	{
-		p = starts_with(node->string, name);
-		if (p && *p)
-			return (p);
-		node = node->next;
+	return (value);
 	}
+	else
+	{
+	currentNode = currentNode->next;
+	}
+	} while (currentNode);
+
 	return (NULL);
 }
 

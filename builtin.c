@@ -51,24 +51,24 @@ currentDir = getcwd(directoryBuffer, 1024);
 	_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!shellInfo->argv[1])
 	{
-	newDir = _getenv(shellInfo, "HOME=");
+	newDir = findEnvironmentValue(shellInfo, "HOME=");
 	if (!newDir)
 	chdirResult = /* TODO: what should this be? */
-	chdir((newDir = _getenv(shellInfo, "PWD=")) ? newDir : "/");
+	chdir((newDir = findEnvironmentValue(shellInfo, "PWD=")) ? newDir : "/");
 	else
 	chdirResult = chdir(newDir);
 	}
 	else if (_strcmp(shellInfo->argv[1], "-") == 0)
 	{
-	if (!_getenv(shellInfo, "OLDPWD="))
+	if (!findEnvironmentValue(shellInfo, "OLDPWD="))
 	{
 	_puts(currentDir);
 	_putchar('\n');
 	return (1);
 	}
-	_puts(_getenv(shellInfo, "OLDPWD=")), _putchar('\n');
+	_puts(findEnvironmentValue(shellInfo, "OLDPWD=")), _putchar('\n');
 	chdirResult = /* TODO: what should this be? */
-	chdir((newDir = _getenv(shellInfo, "OLDPWD=")) ? newDir : "/");
+	chdir((newDir = findEnvironmentValue(shellInfo, "OLDPWD=")) ? newDir : "/");
 	}
 	else
 	{
@@ -81,7 +81,7 @@ currentDir = getcwd(directoryBuffer, 1024);
 	}
 	else
 	{
-	_setenv(shellInfo, "OLDPWD", _getenv(shellInfo, "PWD="));
+	_setenv(shellInfo, "OLDPWD", findEnvironmentValue(shellInfo, "PWD="));
 	_setenv(shellInfo, "PWD", getcwd(directoryBuffer, 1024));
 	}
 	return (0);
