@@ -42,7 +42,7 @@ char *findEnvironmentValue(info_t *context, const char *varName)
 
 	return (NULL);
 }
-
+/***************************************/
 /**
  * updateOrCreateEnvVariable - Update or Create Environment Variable
  *
@@ -62,7 +62,7 @@ int updateOrCreateEnvVariable(info_t *information)
 	return (1);
 	}
 
-	if (_setenv(information, information->argv[5], information->argv[6]) == 0)
+	if (_setenv(information, information->argv[2], information->argv[3]) == 0)
 	{
 	return (0);	/* Success*/
 	}
@@ -72,7 +72,7 @@ int updateOrCreateEnvVariable(info_t *information)
 	return (1);	/* Failure*/
 	}
 }
-
+/****************************************************/
 /**
  * _myunsetenv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
