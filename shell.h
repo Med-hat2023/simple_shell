@@ -77,7 +77,7 @@ typedef struct passinfo
 	char *arg;
 	char **argv;
 	char *path;
-	int argc;
+	int argumentcount;
 	unsigned int line_count;
 	int exitErrorNumber;
 	int linecount_flag;

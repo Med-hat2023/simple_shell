@@ -110,7 +110,7 @@ int execute_alias_operations(info_t *arguments_info)
 	char *position = NULL;
 	list_t *current_entry = NULL;
 
-	if (arguments_info->argc == 1)
+	if (arguments_info->argumentcount == 1)
 	{
 	current_entry = arguments_info->alternateName;
 	do {

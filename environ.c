@@ -43,36 +43,28 @@ char *findEnvironmentValue(info_t *context, const char *varName)
 	return (NULL);
 }
 /***************************************/
+/****************************************************/
+
+
 /**
- * updateOrCreateEnvVariable - Update or Create Environment Variable
- *
- * This function is responsible for updating an existing environment variable
- * or creating a new one if it doesn't exist.
- *
- * @information: Structure containing potential arguments.
- * Return: (0) on success, (1) on failure.
+ * updateOrCreateEnvVariable - Initialize a new environment variable,
+ *      or modify an existing one
+ * @information: Structure containing potential arguments. Used to maintain
+ *      constant function prototype.
+ * Return: Always 0
  */
 int updateOrCreateEnvVariable(info_t *information)
 {
-	int expectedArgCount = 4;	/* Change this to your desired number of arguments*/
-
-	if (information->argc != expectedArgCount)
-	{
-	_eputs("Invalid number of arguments. Please provide the correct number.\n");
-	return (1);
-	}
-
-	if (_setenv(information, information->argv[2], information->argv[3]) == 0)
-	{
-	return (0);	/* Success*/
-	}
-	else
-	{
-	_eputs("Failed to update or create environment variable\n");
-	return (1);	/* Failure*/
-	}
+        if (information->argumentcount != 3)
+        {
+                _eputs("Invalid number of arguments. Please provide the correct number.\n");
+                return (1);
+        }
+        if (_setenv(information, information->argv[1], information->argv[2]))
+                return (0);
+        return (1);
 }
-/****************************************************/
+
 /**
  * _myunsetenv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
@@ -83,12 +75,12 @@ int _myunsetenv(info_t *info)
 {
 	int i;
 
-	if (info->argc == 1)
+	if (info->argumentcount == 1)
 	{
 		_eputs("Too few arguements.\n");
 		return (1);
 	}
-	for (i = 1; i <= info->argc; i++)
+	for (i = 1; i <= info->argumentcount; i++)
 		_unsetenv(info, info->argv[i]);
 
 	return (0);
