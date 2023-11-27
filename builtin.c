@@ -13,15 +13,15 @@ int exitShell(info_t *cmdInfo)
 	int exitCode;
 
 	/* Check if there is an exit argument */
-	if (cmdInfo->argv[1])
+	if (cmdInfo->argumentVector[1])
 	{
-	exitCode = _erratoi(cmdInfo->argv[1]);
+	exitCode = _erratoi(cmdInfo->argumentVector[1]);
 
 	if (exitCode == -1)
 	{
 	cmdInfo->exitStatus = 2;
 	print_error(cmdInfo, "Illegal number: ");
-	_eputs(cmdInfo->argv[1]);
+	_eputs(cmdInfo->argumentVector[1]);
 	_eputchar('\n');
 	return (1);
 	}
@@ -49,7 +49,7 @@ int chdirResult;
 currentDir = getcwd(directoryBuffer, 1024);
 	if (!currentDir)
 	_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!shellInfo->argv[1])
+	if (!shellInfo->argumentVector[1])
 	{
 	newDir = findEnvironmentValue(shellInfo, "HOME=");
 	if (!newDir)
@@ -58,7 +58,7 @@ currentDir = getcwd(directoryBuffer, 1024);
 	else
 	chdirResult = chdir(newDir);
 	}
-	else if (_strcmp(shellInfo->argv[1], "-") == 0)
+	else if (_strcmp(shellInfo->argumentVector[1], "-") == 0)
 	{
 	if (!findEnvironmentValue(shellInfo, "OLDPWD="))
 	{
@@ -72,12 +72,12 @@ currentDir = getcwd(directoryBuffer, 1024);
 	}
 	else
 	{
-	chdirResult = chdir(shellInfo->argv[1]);
+	chdirResult = chdir(shellInfo->argumentVector[1]);
 	}
 	if (chdirResult == -1)
 	{
 	print_error(shellInfo, "can't cd to ");
-	_eputs(shellInfo->argv[1]), _eputchar('\n');
+	_eputs(shellInfo->argumentVector[1]), _eputchar('\n');
 	}
 	else
 	{
@@ -96,7 +96,7 @@ currentDir = getcwd(directoryBuffer, 1024);
  */
 int displayShellHelp(info_t *commandInfo)
 {
-	char **arguments = commandInfo->argv;
+	char **arguments = commandInfo->argumentVector;
 
 	_puts("Welcome to the Shell Help Center!\n");
 

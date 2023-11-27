@@ -48,40 +48,47 @@ char *findEnvironmentValue(info_t *context, const char *varName)
 
 /**
  * updateOrCreateEnvVariable - Initialize a new environment variable,
- *      or modify an existing one
+ *	or modify an existing one
  * @information: Structure containing potential arguments. Used to maintain
- *      constant function prototype.
+ *	constant function prototype.
  * Return: Always 0
  */
 int updateOrCreateEnvVariable(info_t *information)
 {
-        if (information->argumentcount != 3)
-        {
-                _eputs("Invalid number of arguments. Please provide the correct number.\n");
-                return (1);
-        }
-        if (_setenv(information, information->argv[1], information->argv[2]))
-                return (0);
-        return (1);
+	if (information->argumentcount != 3)
+	{
+	_eputs("Invalid number of arguments. Please provide the correct number.\n");
+	return (1);
+	}
+	if (_setenv(information, information->argumentVector[1],
+				information->argumentVector[2]))
+	return (0);
+	return (1);
 }
 
-/**
- * _myunsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
- *	constant function prototype.
- *	Return: Always 0
- */
-int _myunsetenv(info_t *info)
-{
-	int i;
 
-	if (info->argumentcount == 1)
+/**
+ * removeEnvironmentVariable - Remove specified environment variables
+ * @information: Structure containing potential arguments. Used to maintain
+ *	constant function prototype.
+ * Return: Always 0
+ */
+int removeEnvironmentVariable(info_t *information)
+{
+	int index = 1;
+
+	if (information->argumentcount == 1)
+	{ do
 	{
-		_eputs("Too few arguements.\n");
-		return (1);
-	}
-	for (i = 1; i <= info->argumentcount; i++)
-		_unsetenv(info, info->argv[i]);
+	_eputs("Insufficient arguments.\n");
+	} while (0);
+
+	return (1);
+	} do
+	{
+	_unsetenv(information, information->argumentVector[index]);
+	index++;
+	} while (index <= information->argumentcount);
 
 	return (0);
 }

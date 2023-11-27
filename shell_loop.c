@@ -61,14 +61,14 @@ int find_builtin(info_t *info)
 		{"help", displayShellHelp},
 		{"history", displayCommandLog},
 		{"setenv", updateOrCreateEnvVariable},
-		{"unsetenv", _myunsetenv},
+		{"unsetenv", removeEnvironmentVariable},
 		{"cd", changeCurrentDirectory},
 		{"alias", execute_alias_operations},
 		{NULL, NULL}
 	};
 
 	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+		if (_strcmp(info->argumentVector[0], builtintbl[i].type) == 0)
 		{
 			info->line_count++;
 			built_in_ret = builtintbl[i].func(info);
@@ -88,7 +88,7 @@ void find_cmd(info_t *info)
 	char *path = NULL;
 	int i, k;
 
-	info->path = info->argv[0];
+	info->path = info->argumentVector[0];
 	if (info->linecount_flag == 1)
 	{
 		info->line_count++;
@@ -100,7 +100,7 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = find_path(info, findEnvironmentValue(info, "PATH="), info->argv[0]);
+	path = find_path(info, findEnvironmentValue(info, "PATH="), info->argumentVector[0]);
 	if (path)
 	{
 		info->path = path;
@@ -109,7 +109,7 @@ void find_cmd(info_t *info)
 	else
 	{
 		if ((checkInteractiveMode(info) || findEnvironmentValue(info, "PATH=")
-			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+			|| info->argumentVector[0][0] == '/') && is_cmd(info, info->argumentVector[0]))
 			fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
@@ -138,7 +138,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		if (execve(info->path, info->argumentVector, get_environ(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)

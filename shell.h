@@ -75,7 +75,7 @@ typedef struct liststring
 typedef struct passinfo
 {
 	char *arg;
-	char **argv;
+	char **argumentVector;
 	char *path;
 	int argumentcount;
 	unsigned int line_count;
@@ -206,7 +206,7 @@ int displayEnvironment(info_t *context);
 
 char *findEnvironmentValue(info_t *context, const char *varName);
 int updateOrCreateEnvVariable(info_t *information);
-int _myunsetenv(info_t *);
+int removeEnvironmentVariable(info_t *information);
 int populate_env_list(info_t *);
 
 /* toem_getenv.c */

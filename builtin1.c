@@ -122,15 +122,15 @@ int execute_alias_operations(info_t *arguments_info)
 
 	index = 1;
 	do {
-	position = _strchr(arguments_info->argv[index], '=');
+	position = _strchr(arguments_info->argumentVector[index], '=');
 	if (position)
-	associate_string_with_alias(arguments_info, arguments_info->argv[index]);
+	associate_string_with_alias(arguments_info, arguments_info->argumentVector[index]);
 	else
 	display_entry(node_starts_with(arguments_info->alternateName,
-					arguments_info->argv[index], '='));
+					arguments_info->argumentVector[index], '='));
 
 	index++;
-	} while (arguments_info->argv[index]);
+	} while (arguments_info->argumentVector[index]);
 
 	return (0);
 }
