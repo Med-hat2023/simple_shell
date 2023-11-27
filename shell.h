@@ -207,7 +207,7 @@ int displayEnvironment(info_t *context);
 char *findEnvironmentValue(info_t *context, const char *varName);
 int updateOrCreateEnvVariable(info_t *information);
 int removeEnvironmentVariable(info_t *information);
-int populate_env_list(info_t *);
+int initializeEnvironmentList(info_t *inputInfo);
 
 /* toem_getenv.c */
 char **get_environ(info_t *);
