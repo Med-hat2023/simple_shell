@@ -176,7 +176,7 @@ int convertStringToInt(char *inputString);
 void displayErrorInfo(info_t *information, char *errorMessage);
 int printDecimalToFD(int value, int fileDescriptor);
 char *numberToString(long int number, int initialBase, int conversionFlags);
-void remove_comments(char *);
+void deactivateHash(char *inputString);
 
 /* toem_builtin.c */
 int exitShell(info_t *cmdInfo);

@@ -152,19 +152,28 @@ char *numberToString(long int number, int initialBase, int conversionFlags)
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * deactivateHash - Eradicates the first '#' occurrence in the given string.
+ * @inputString: Pointer to the string to be modified.
  *
- * Return: Always 0;
+ * This function utilizes a while loop to find and
+ * replace the first '#' character
+ * with '\0' if it is either at the beginning of the string or follows a space.
+ *
+ * Return: in this cases Always (0)
  */
-void remove_comments(char *buf)
+void deactivateHash(char *inputString)
 {
-	int i;
+	int index = 0;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
-		{
-			buf[i] = '\0';
-			break;
-		}
+	while (inputString[index] != '\0')
+	{
+	if (inputString[index] == '#' && (!index == 0 ||
+				inputString[index - 1] == ' '))
+	{
+	inputString[index] = '\0';
+	break;
+	}
+	index++;
+	}
 }
+
