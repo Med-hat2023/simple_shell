@@ -46,7 +46,7 @@ void displayErrorInfo(info_t *information, char *errorMessage)
 {
 	_eputs(information->fileName);
 	_eputs(": ");
-	print_d(information->line_count, STDERR_FILENO);
+	printDecimalToFD(information->line_count, STDERR_FILENO);
 	_eputs(": ");
 	_eputs(information->argumentVector[0]);
 	_eputs(": ");
@@ -59,47 +59,53 @@ void displayErrorInfo(info_t *information, char *errorMessage)
 	{
 	_eputs("Unknown error");
 	}
+
 }
 
 
 /**
- * print_d - function prints a decimal (integer) number (base 10)
- * @input: the input
- * @fd: the filedescriptor to write to
- *
+ * printDecimalToFD - outputs a decimal (integer)
+ * number (base 10) to a file descriptor
+ * @value: the input value to be printed
+ * @fileDescriptor: the file descriptor to write to
  * Return: number of characters printed
  */
-int print_d(int input, int fd)
+int printDecimalToFD(int value, int fileDescriptor)
 {
-	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int (*putchar)(char) = putchar;
+	int occurrences = 0;
 
-	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
-	if (input < 0)
-	{
-		_abs_ = -input;
-		__putchar('-');
-		count++;
-	}
-	else
-		_abs_ = input;
-	current = _abs_;
-	for (i = 1000000000; i > 1; i /= 10)
-	{
-		if (_abs_ / i)
-		{
-			__putchar('0' + current / i);
-			count++;
-		}
-		current %= i;
-	}
-	__putchar('0' + current);
-	count++;
+	unsigned int absoluteValue = (value < 0) ? -value : value;
+	int curValue = absoluteValue;
+	int y = 100000 * 10000;	/*Move the declaration and initialization of y here*/
+	int digit = curValue / y;
 
-	return (count);
+	if (fileDescriptor == STDERR_FILENO)
+	putchar = _eputchar;
+
+	if (value < 0)
+	{
+	putchar('-');
+	occurrences++;
+	}
+
+	while (y > 1)
+	{
+	if (digit)
+	{
+	putchar('0' + digit);
+	occurrences++;
+	}
+	curValue %= y;
+	y /= 10;
+	}
+
+	putchar('0' + curValue);
+	occurrences++;
+
+	return (occurrences);
 }
+
 
 /**
  * convert_number - converter function, a clone of itoa

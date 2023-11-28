@@ -174,7 +174,7 @@ int stringToIntConverter(char *inputString);
 
 int convertStringToInt(char *inputString);
 void displayErrorInfo(info_t *information, char *errorMessage);
-int print_d(int, int);
+int printDecimalToFD(int value, int fileDescriptor);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
 
