@@ -24,7 +24,7 @@
 #define CMD_CHAIN	3
 
 /* for convert_number() */
-#define CONVERT_LOWERCASE	1
+#define lowercaseConversion     1
 #define CONVERT_UNSIGNED	2
 
 /* 1 if using system getline() */
@@ -175,7 +175,7 @@ int stringToIntConverter(char *inputString);
 int convertStringToInt(char *inputString);
 void displayErrorInfo(info_t *information, char *errorMessage);
 int printDecimalToFD(int value, int fileDescriptor);
-char *convert_number(long int, int, int);
+char *numberToString(long int number, int initialBase, int conversionFlags);
 void remove_comments(char *);
 
 /* toem_builtin.c */

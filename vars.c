@@ -117,13 +117,13 @@ int replace_vars(info_t *info)
 		if (!_strcmp(info->argumentVector[i], "$?"))
 		{
 			replace_string(&(info->argumentVector[i]),
-				_strdup(convert_number(info->exitStatus, 10, 0)));
+				_strdup(numberToString(info->exitStatus, 10, 0)));
 			continue;
 		}
 		if (!_strcmp(info->argumentVector[i], "$$"))
 		{
 			replace_string(&(info->argumentVector[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
+				_strdup(numberToString(getpid(), 10, 0)));
 			continue;
 		}
 		node = node_starts_with(info->environmentVariables, &info->argumentVector[i][1], '=');

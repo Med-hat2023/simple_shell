@@ -108,39 +108,47 @@ int printDecimalToFD(int value, int fileDescriptor)
 
 
 /**
- * convert_number - converter function, a clone of itoa
- * @num: number
- * @base: base
- * @flags: argument flags
+ * numberToString - brief Converts a number to a string
+ * representation in the specified base.
  *
- * Return: string
+ * @number: The number to be converted.
+ * @initialBase: The initial base for the conversion.
+ * @conversionFlags: Flags for special conversion options.
+ *	Use CONVERT_UNSIGNED flag for unsigned conversion.
+ *	Use CONVERT_LOWER flag for lowercase hex characters.
+ * Return: A string representation of the converted number.
  */
-char *convert_number(long int num, int base, int flags)
+char *numberToString(long int number, int initialBase, int conversionFlags)
 {
-	static char *array;
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
+	static char *characterSet;
+	static char resultBuffer[60];
+	char direction = 0;
+	/* Changed variable name from 'resultPtr' to 'resultPointer'*/
+	char *resultPointer;
+	unsigned long n = (unsigned long)number;
 
-	if (!(flags & CONVERT_UNSIGNED) && num < 0)
+	if (!(conversionFlags & CONVERT_UNSIGNED) && number < 0)
 	{
-		n = -num;
-		sign = '-';
-
+	n = -number;
+	direction = '-';
 	}
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
 
-	do	{
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
+	characterSet = (conversionFlags & lowercaseConversion) ?
+		"0123456789abcdef" : "0123456789ABCDEF";
+	/* Changed variable name from 'resultPtr' to 'resultPointer'*/
+	resultPointer = &resultBuffer[59];
+	*resultPointer = '\0';
 
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
+	for (; n != 0; n /= initialBase)
+	{
+	/*Changed variable name from 'base' to 'initialBase'*/
+		*--resultPointer = characterSet[n % initialBase];
+	}
+
+	if (direction)
+	*--resultPointer = direction;
+
+	return (resultPointer);
 }
 
 /**
