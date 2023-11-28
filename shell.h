@@ -81,7 +81,7 @@ typedef struct passinfo
 	unsigned int line_count;
 	int exitErrorNumber;
 	int linecount_flag;
-	char *fname;
+	char *fileName;
 	list_t *environmentVariables;
 	list_t *commandList;
 	list_t *alternateName;
@@ -173,7 +173,7 @@ int stringToIntConverter(char *inputString);
 /* toem_errors1.c */
 
 int convertStringToInt(char *inputString);
-void print_error(info_t *, char *);
+void displayErrorInfo(info_t *information, char *errorMessage);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);

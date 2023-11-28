@@ -20,7 +20,7 @@ int exitShell(info_t *cmdInfo)
 	if (exitCode == -1)
 	{
 	cmdInfo->exitStatus = 2;
-	print_error(cmdInfo, "Illegal number: ");
+	displayErrorInfo(cmdInfo, "Illegal number: ");
 	_eputs(cmdInfo->argumentVector[1]);
 	_eputchar('\n');
 	return (1);
@@ -76,7 +76,7 @@ currentDir = getcwd(directoryBuffer, 1024);
 	}
 	if (chdirResult == -1)
 	{
-	print_error(shellInfo, "can't cd to ");
+	displayErrorInfo(shellInfo, "can't cd to ");
 	_eputs(shellInfo->argumentVector[1]), _eputchar('\n');
 	}
 	else

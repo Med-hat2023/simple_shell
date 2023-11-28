@@ -114,7 +114,7 @@ void find_cmd(info_t *info)
 		else if (*(info->arg) != '\n')
 		{
 			info->exitStatus = 127;
-			print_error(info, "not found\n");
+			displayErrorInfo(info, "not found\n");
 		}
 	}
 }
@@ -154,7 +154,7 @@ void fork_cmd(info_t *info)
 		{
 			info->exitStatus = WEXITSTATUS(info->exitStatus);
 			if (info->exitStatus == 126)
-				print_error(info, "Permission denied\n");
+				displayErrorInfo(info, "Permission denied\n");
 		}
 	}
 }

@@ -2,7 +2,6 @@
 
 #include <limits.h>
 
-#include <limits.h>
 
 /**
  * convertStringToInt - converts a string to an integer
@@ -38,22 +37,30 @@ int convertStringToInt(char *inputString)
 }
 
 /**
- * print_error - prints an error message
- * @info: the parameter & return info struct
- * @estr: string containing specified error type
- * Return: 0 if no numbers in string, converted number otherwise
- *	-1 on error
+ * displayErrorInfo - outputs an error message along with relevant information
+ * @information: the parameter & return info struct
+ * @errorMessage: string containing specified error type
+ * Returns: N/A
  */
-void print_error(info_t *info, char *estr)
+void displayErrorInfo(info_t *information, char *errorMessage)
 {
-	_eputs(info->fname);
+	_eputs(information->fileName);
 	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
+	print_d(information->line_count, STDERR_FILENO);
 	_eputs(": ");
-	_eputs(info->argumentVector[0]);
+	_eputs(information->argumentVector[0]);
 	_eputs(": ");
-	_eputs(estr);
+
+	if (errorMessage != NULL)
+	{
+	_eputs(errorMessage);
+	}
+	else
+	{
+	_eputs("Unknown error");
+	}
 }
+
 
 /**
  * print_d - function prints a decimal (integer) number (base 10)
