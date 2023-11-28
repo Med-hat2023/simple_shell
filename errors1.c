@@ -1,31 +1,40 @@
 #include "shell.h"
 
-/**
- * _erratoi - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
- */
-int _erratoi(char *s)
-{
-	int i = 0;
-	unsigned long int result = 0;
+#include <limits.h>
 
-	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
-	for (i = 0;  s[i] != '\0'; i++)
+#include <limits.h>
+
+/**
+ * convertStringToInt - converts a string to an integer
+ * @inputString: the string to be converted
+ * Return: 0 if no numbers in string, converted number otherwise
+ *	-1 on error
+ */
+int convertStringToInt(char *inputString)
+{
+	int is_negative = 0;
+	unsigned long int converted_number = 0;
+
+	if (*inputString == '+')
+	inputString++;
+
+	for (is_negative = 0; inputString[is_negative] != '\0'; is_negative++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			result *= 10;
-			result += (s[i] - '0');
-			if (result > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
+	if (inputString[is_negative] >= '0' && inputString[is_negative] <= '9')
+	{
+	converted_number *= 10;
+	converted_number += (inputString[is_negative] - '0');
+
+	if (converted_number > 9999)
+	return (-1);
 	}
-	return (result);
+	else
+	{
+	return (-1);
+	}
+	}
+
+	return (converted_number);
 }
 
 /**
@@ -33,7 +42,7 @@ int _erratoi(char *s)
  * @info: the parameter & return info struct
  * @estr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
- *        -1 on error
+ *	-1 on error
  */
 void print_error(info_t *info, char *estr)
 {

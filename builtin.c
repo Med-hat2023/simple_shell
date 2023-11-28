@@ -15,7 +15,7 @@ int exitShell(info_t *cmdInfo)
 	/* Check if there is an exit argument */
 	if (cmdInfo->argumentVector[1])
 	{
-	exitCode = _erratoi(cmdInfo->argumentVector[1]);
+	exitCode = convertStringToInt(cmdInfo->argumentVector[1]);
 
 	if (exitCode == -1)
 	{
