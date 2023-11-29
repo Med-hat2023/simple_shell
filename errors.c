@@ -1,22 +1,28 @@
 #include "shell.h"
 
 /**
- *_eputs - prints an input string
- * @str: the string to be printed
+ * printText - Outputs characters from a given string.
+ * @text: The string to be printed.
  *
- * Return: Nothing
+ * This function uses a do-while loop to print
+ * each character of the input string
+ * using a custom printing function (_eputchar).
+ * If the input string is NULL, the
+ * function returns without performing any action.
+ *@text:refers to print str
+ * Return: No anY things
  */
-void _eputs(char *str)
+void printText(char *text)
 {
-	int i = 0;
+	int index = 0;
 
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_eputchar(str[i]);
-		i++;
-	}
+	if (!text)
+	return;
+
+	do {
+	_eputchar(text[index]);
+	index++;
+	} while (text[index] != '\0');
 }
 
 /**

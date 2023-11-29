@@ -57,7 +57,7 @@ int updateOrCreateEnvVariable(info_t *information)
 {
 	if (information->argumentcount != 3)
 	{
-	_eputs("Invalid number of arguments. Please provide the correct number.\n");
+	printText("Invalid number of arguments. Please provide the correct number.\n");
 	return (1);
 	}
 	if (_setenv(information, information->argumentVector[1],
@@ -80,7 +80,7 @@ int removeEnvironmentVariable(info_t *information)
 	if (information->argumentcount == 1)
 	{ do
 	{
-	_eputs("Insufficient arguments.\n");
+	printText("Insufficient arguments.\n");
 	} while (0);
 
 	return (1);

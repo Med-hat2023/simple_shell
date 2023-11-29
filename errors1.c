@@ -44,20 +44,20 @@ int convertStringToInt(char *inputString)
  */
 void displayErrorInfo(info_t *information, char *errorMessage)
 {
-	_eputs(information->fileName);
-	_eputs(": ");
+	printText(information->fileName);
+	printText(": ");
 	printDecimalToFD(information->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(information->argumentVector[0]);
-	_eputs(": ");
+	printText(": ");
+	printText(information->argumentVector[0]);
+	printText(": ");
 
 	if (errorMessage != NULL)
 	{
-	_eputs(errorMessage);
+	printText(errorMessage);
 	}
 	else
 	{
-	_eputs("Unknown error");
+	printText("Unknown error");
 	}
 
 }
@@ -152,7 +152,7 @@ char *numberToString(long int number, int initialBase, int conversionFlags)
 }
 
 /**
- * eliminateComments - Removes the first '#' occurrence in the given string.
+ * deactivateHash - Removes the first '#' occurrence in the given string.
  * @inputString: Pointer to the string to be modified.
  *
  * This function employs a do-while loop to locate and replace
