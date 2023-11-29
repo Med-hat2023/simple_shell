@@ -101,7 +101,7 @@ int writeToDescriptor(char outputChar, int fileDescriptor)
  * @inputString: The string to be sent.
  * @fileDescriptor: The file descriptor for transmission.
  *
- * This function uses a do-while loop to transmit
+ * This function utilizes a for loop to transmit
  * each character of the input string to the given
  * file descriptor using a custom transmission function
  * (transmitCharToDescriptor).
@@ -116,9 +116,10 @@ int transmitStringToDescriptor(char *inputString, int fileDescriptor)
 	if (!inputString)
 	return (0);
 
-	do {
-	charCount += writeToDescriptor(*inputString++, fileDescriptor);
-	} while (*inputString);
+	for (; *inputString; inputString++)
+	{
+	charCount += writeToDescriptor(*inputString, fileDescriptor);
+	}
 
 	return (charCount);
 }
