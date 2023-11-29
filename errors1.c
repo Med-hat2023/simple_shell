@@ -81,7 +81,7 @@ int printDecimalToFD(int value, int fileDescriptor)
 	int digit = curValue / y;
 
 	if (fileDescriptor == STDERR_FILENO)
-	putchar = _eputchar;
+	putchar = writeToStderr;
 
 	if (value < 0)
 	{

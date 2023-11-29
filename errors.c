@@ -20,30 +20,38 @@ void printText(char *text)
 	return;
 
 	do {
-	_eputchar(text[index]);
+	writeToStderr(text[index]);
 	index++;
 	} while (text[index] != '\0');
 }
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
+ * writeToStderr - Outputs a character to the standard error stream.
+ * @outputChar: The character to be written.
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * This function writes the given character to the standard error stream.
+ * If the character is BUF_FLUSH or the internal buffer is full, the buffer
+ * is flushed to stderr. On success, it returns 1; on error, -1 is returned,
+ * and errno is set appropriately.
+ * Return:	On success, it returns 1; on error, -1 is returned,
  */
-int _eputchar(char c)
+int writeToStderr(char outputChar)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int bufferIndex;
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	static char writeBuffer[ADJUSTABLE_WRITE_BUFFER_SIZE];
+
+	if (outputChar == BUF_FLUSH || bufferIndex >=
+			ADJUSTABLE_WRITE_BUFFER_SIZE)
 	{
-		write(2, buf, i);
-		i = 0;
+	write(2, writeBuffer, bufferIndex);
+	bufferIndex = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	else
+	{
+	writeBuffer[bufferIndex++] = outputChar;
+	}
+
 	return (1);
 }
 
@@ -58,9 +66,9 @@ int _eputchar(char c)
 int _putfd(char c, int fd)
 {
 	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static char buf[ADJUSTABLE_WRITE_BUFFER_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= ADJUSTABLE_WRITE_BUFFER_SIZE)
 	{
 		write(fd, buf, i);
 		i = 0;

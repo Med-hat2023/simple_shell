@@ -29,8 +29,8 @@ int main(int ac, char **av)
 				printText(av[0]);
 				printText(": 0: Can't open ");
 				printText(av[1]);
-				_eputchar('\n');
-				_eputchar(BUF_FLUSH);
+				writeToStderr('\n');
+				writeToStderr(BUF_FLUSH);
 				exit(127);
 			}
 			return (EXIT_FAILURE);

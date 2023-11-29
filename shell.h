@@ -14,7 +14,7 @@
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
-#define WRITE_BUF_SIZE 1024
+#define ADJUSTABLE_WRITE_BUFFER_SIZE 1024
 #define BUF_FLUSH -1
 
 /* for command chaining */
@@ -127,7 +127,7 @@ int loophsh(char **);
 
 /* toem_errors.c */
 void printText(char *text);
-int _eputchar(char);
+int writeToStderr(char outputChar);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
