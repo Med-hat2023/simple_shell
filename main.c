@@ -30,7 +30,7 @@ int main(int ac, char **av)
 				printText(": 0: Can't open ");
 				printText(av[1]);
 				writeToStderr('\n');
-				writeToStderr(BUF_FLUSH);
+				writeToStderr(CLEAR_BUFFER);
 				exit(127);
 			}
 			return (EXIT_FAILURE);

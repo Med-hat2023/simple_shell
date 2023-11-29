@@ -38,10 +38,11 @@ void printText(char *text)
 int writeToStderr(char outputChar)
 {
 	static int bufferIndex;
+	/*Change this value as needed*/
 
 	static char writeBuffer[ADJUSTABLE_WRITE_BUFFER_SIZE];
 
-	if (outputChar == BUF_FLUSH || bufferIndex >=
+	if (outputChar == CLEAR_BUFFER || bufferIndex >=
 			ADJUSTABLE_WRITE_BUFFER_SIZE)
 	{
 	write(2, writeBuffer, bufferIndex);
@@ -56,27 +57,43 @@ int writeToStderr(char outputChar)
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
+ * writeToDescriptor - Sends a character to the specified file descriptor.
+ * @outputChar: The character to be transmitted.
+ * @fileDescriptor: The file descriptor to write to.
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * This function writes the provided character to
+ * the specified file descriptor.
+ * If the character is CLEAR_BUFFER or the internal
+ * buffer is full, the buffer
+ * is flushed to the file descriptor. On success, it returns 1; on error, -1 is
+ * returned, and errno is set appropriately.
+ * Return: 1 on error
  */
-int _putfd(char c, int fd)
+int writeToDescriptor(char outputChar, int fileDescriptor)
 {
-	static int i;
-	static char buf[ADJUSTABLE_WRITE_BUFFER_SIZE];
+	static int bufferIndex;
+	static char writeBuffer[ADJUSTABLE_WRITE_BUFFER_SIZE];
+	 /* Change this character as needed*/
 
-	if (c == BUF_FLUSH || i >= ADJUSTABLE_WRITE_BUFFER_SIZE)
+	if (outputChar == CLEAR_BUFFER)
 	{
-		write(fd, buf, i);
-		i = 0;
+	write(fileDescriptor, writeBuffer, bufferIndex);
+	bufferIndex = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	else if
+		(bufferIndex >= ADJUSTABLE_WRITE_BUFFER_SIZE)
+		{
+	write(fileDescriptor, writeBuffer, bufferIndex);
+	bufferIndex = 0;
+	}
+	else
+	{
+	writeBuffer[bufferIndex++] = outputChar;
+	}
+
 	return (1);
 }
+
 
 /**
  *_putsfd - prints an input string
@@ -93,7 +110,7 @@ int _putsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		i += _putfd(*str++, fd);
+		i += writeToDescriptor(*str++, fd);
 	}
 	return (i);
 }

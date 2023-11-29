@@ -17,7 +17,7 @@ int hsh(info_t *info, char **av)
 		clear_info(info);
 		if (checkInteractiveMode(info))
 			_puts("$ ");
-		writeToStderr(BUF_FLUSH);
+		writeToStderr(CLEAR_BUFFER);
 		r = get_input(info);
 		if (r != -1)
 		{

@@ -15,7 +15,7 @@
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
 #define ADJUSTABLE_WRITE_BUFFER_SIZE 1024
-#define BUF_FLUSH -1
+#define CLEAR_BUFFER  -1
 
 /* for command chaining */
 #define CMD_NORM	0
@@ -128,7 +128,7 @@ int loophsh(char **);
 /* toem_errors.c */
 void printText(char *text);
 int writeToStderr(char outputChar);
-int _putfd(char c, int fd);
+int writeToDescriptor(char outputChar, int fileDescriptor);
 int _putsfd(char *str, int fd);
 
 /* toem_string.c */
