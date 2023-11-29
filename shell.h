@@ -129,7 +129,7 @@ int loophsh(char **);
 void printText(char *text);
 int writeToStderr(char outputChar);
 int writeToDescriptor(char outputChar, int fileDescriptor);
-int _putsfd(char *str, int fd);
+int transmitStringToDescriptor(char *inputString, int fileDescriptor);
 
 /* toem_string.c */
 int _strlen(char *);

@@ -45,7 +45,7 @@ int write_history(info_t *info)
 		return (-1);
 	for (node = info->commandList; node; node = node->next)
 	{
-		_putsfd(node->string, fd);
+		transmitStringToDescriptor(node->string, fd);
 		writeToDescriptor('\n', fd);
 	}
 	writeToDescriptor(CLEAR_BUFFER, fd);

@@ -96,21 +96,30 @@ int writeToDescriptor(char outputChar, int fileDescriptor)
 
 
 /**
- *_putsfd - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
+ * transmitStringToDescriptor - Dispatches a string to a
+ * specified file descriptor.
+ * @inputString: The string to be sent.
+ * @fileDescriptor: The file descriptor for transmission.
  *
- * Return: the number of chars put
+ * This function uses a do-while loop to transmit
+ * each character of the input string to the given
+ * file descriptor using a custom transmission function
+ * (transmitCharToDescriptor).
+ * If the input string is NULL, the function returns 0.
+ *
+ * Return: The total number of characters transmitted.
  */
-int _putsfd(char *str, int fd)
+int transmitStringToDescriptor(char *inputString, int fileDescriptor)
 {
-	int i = 0;
+	int charCount = 0;
 
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		i += writeToDescriptor(*str++, fd);
-	}
-	return (i);
+	if (!inputString)
+	return (0);
+
+	do {
+	charCount += writeToDescriptor(*inputString++, fileDescriptor);
+	} while (*inputString);
+
+	return (charCount);
 }
+
