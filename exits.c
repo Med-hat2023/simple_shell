@@ -16,29 +16,21 @@
  *
  * Return:Pointer to the beginning of the output string.
  */
+
 char *CustomStringCopy(char *output, char *source, int limit)
 {
-	int indexSource = 0, indexFill = indexSource;
+	int indexSource, indexFill;
 	char *result = output;
 
-	do {
-	if (source[indexSource] == '\0' || indexSource >= limit - 1)
-	break;
-
-	output[indexSource] = source[indexSource];
-	indexSource++;
-	} while (1);
-
-	if (indexSource < limit)
+	for (indexSource = 0; source[indexSource] != '\0' && indexSource <
+						limit - 1; indexSource++)
 	{
+	output[indexSource] = source[indexSource];
+	}
 
-	do {
-	if (indexFill >= limit)
-	break;
-
+	for (indexFill = indexSource; indexFill < limit; indexFill++)
+	{
 	output[indexFill] = '\0';
-	indexFill++;
-	} while (1);
 	}
 
 	return (result);
