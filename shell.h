@@ -144,8 +144,8 @@ void _puts(char *);
 int _putchar(char);
 
 /* toem_exits.c */
-char *CustomStringCopy(char *output, char *source, int limit);
-char *_strncat(char *, char *, int);
+char *CustomStringCopy(char *output, char *source, int limi);
+char *ConcatenateLimited(char *destination, char *source, int limit);
 char *_strchr(char *, char);
 
 /* toem_tokenizer.c */
