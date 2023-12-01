@@ -87,7 +87,7 @@ int replace_alias(info_t *info)
 		if (!node)
 			return (0);
 		free(info->argumentVector[0]);
-		p = _strchr(node->string, '=');
+		p  = FindCharacter(node->string, '=');
 		if (!p)
 			return (0);
 		p = _strdup(p + 1);
@@ -130,7 +130,7 @@ int replace_vars(info_t *info)
 		if (node)
 		{
 			replace_string(&(info->argumentVector[i]),
-				_strdup(_strchr(node->string, '=') + 1));
+				_strdup(FindCharacter(node->string, '=') + 1));
 			continue;
 		}
 		replace_string(&info->argumentVector[i], _strdup(""));

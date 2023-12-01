@@ -86,17 +86,30 @@ char *ConcatenateLimited(char *destination, char *source, int limit)
 }
 
 /**
- **_strchr - locates a character in a string
- *@s: the string to be parsed
- *@c: the character to look for
- *Return: (s) a pointer to the memory area s
+ * FindCharacter - Finds a character in a string
+ * @string: The string to be searched
+ * @character: The character to look for
+ *
+ * Description:
+ *	This function searches for the first occurrence
+ *	of 'character' in the
+ *	string 'str'. If found, it returns a pointer
+ *	to the memory location of
+ *	the character; otherwise, it returns NULL.
+ *
+ * Return:Pointer to the memory area in the string
+ * where the character is found,
+ *	or NULL if the character is not present.
  */
-char *_strchr(char *s, char c)
+char *FindCharacter(char *string, char character)
 {
-	do {
-		if (*s == c)
-			return (s);
-	} while (*s++ != '\0');
+	while (*string != '\0')
+	{
+	if (*string == character)
+	return (string);
+	string++;
+	}
 
 	return (NULL);
 }
+

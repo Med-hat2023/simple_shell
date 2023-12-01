@@ -26,7 +26,7 @@ int dissolve_alias_connection(info_t *data_info, char *target_sequence)
 	char *position, character;
 	int result;
 
-	position = _strchr(target_sequence, '=');
+	position = FindCharacter(target_sequence, '=');
 	if (!position)
 	return (1);
 	character = *position;
@@ -48,7 +48,7 @@ int dissolve_alias_connection(info_t *data_info, char *target_sequence)
  */
 int associate_string_with_alias(info_t *data_info, char *target_sequence)
 {
-	char *position = _strchr(target_sequence, '=');
+	char *position = FindCharacter(target_sequence, '=');
 
 	if (position == NULL)
 	{
@@ -77,7 +77,7 @@ int display_entry(list_t *displayed_entry)
 {
 	if (displayed_entry)
 	{
-	char *separator = _strchr(displayed_entry->string, '=');
+	char *separator = FindCharacter(displayed_entry->string, '=');
 	char *entry_value = displayed_entry->string;
 
 	while (entry_value <= separator)
@@ -122,7 +122,7 @@ int execute_alias_operations(info_t *arguments_info)
 
 	index = 1;
 	do {
-	position = _strchr(arguments_info->argumentVector[index], '=');
+	position = FindCharacter(arguments_info->argumentVector[index], '=');
 	if (position)
 	associate_string_with_alias(arguments_info, arguments_info->argumentVector[index]);
 	else
