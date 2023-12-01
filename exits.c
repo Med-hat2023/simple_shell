@@ -1,33 +1,47 @@
 #include "shell.h"
 
 /**
- **_strncpy - copies a string
- *@dest: the destination string to be copied to
- *@src: the source string
- *@n: the amount of characters to be copied
- *Return: the concatenated string
+ * CustomStringCopy - Copies a portion of a source string to
+ * an output string
+ * @output: Pointer to the output string
+ * @source: Pointer to the source string
+ * @limit: Maximum number of characters to copy
+ *
+ * Description:
+ *	This function copies up to 'limit' characters from
+ *	the 'source' string to the
+ *	'output' string. If the length of 'source'
+ *	is less than 'limit', the
+ *	remaining characters in 'output' are filled with null characters.
+ *
+ * Return:Pointer to the beginning of the output string.
  */
-char *_strncpy(char *dest, char *src, int n)
+char *CustomStringCopy(char *output, char *source, int limit)
 {
-	int i, j;
-	char *s = dest;
+	int indexSource = 0, indexFill = indexSource;
+	char *result = output;
 
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
+	do {
+	if (source[indexSource] == '\0' || indexSource >= limit - 1)
+	break;
+
+	output[indexSource] = source[indexSource];
+	indexSource++;
+	} while (1);
+
+	if (indexSource < limit)
 	{
-		dest[i] = src[i];
-		i++;
+
+	do {
+	if (indexFill >= limit)
+	break;
+
+	output[indexFill] = '\0';
+	indexFill++;
+	} while (1);
 	}
-	if (i < n)
-	{
-		j = i;
-		while (j < n)
-		{
-			dest[j] = '\0';
-			j++;
-		}
-	}
-	return (s);
+
+	return (result);
 }
 
 /**
