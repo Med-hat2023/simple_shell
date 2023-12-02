@@ -15,38 +15,39 @@ void initializeInfo(info_t *data)
 	}
 }
 
-
 /**
- * set_info - initializes info_t struct
- * @info: struct address
- * @av: argument vector
+ * configureInfo - initializes info_t struct and processes arguments
+ * @data: struct address
+ * @arguments: argument vector
  */
-void set_info(info_t *info, char **av)
+void configureInfo(info_t *data, char **arguments)
 {
-	int i = 0;
+	int argument_count = 0;
 
-	info->fileName = av[0];
-	if (info->argumentCount)
+	data->fileName = arguments[0];
+	if (data->argumentCount)
 	{
-		info->argumentVector = strtow(info->argumentCount, " \t");
-		if (!info->argumentVector)
-		{
+	data->argumentVector = strtow(data->argumentCount, " \t");
+	if (!data->argumentVector)
+	{
+	data->argumentVector = malloc(sizeof(char *) * 2);
+	if (data->argumentVector)
+	{
+	data->argumentVector[0] = _strdup(data->argumentCount);
+	data->argumentVector[1] = NULL;
+	}
+	}
+	while (data->argumentVector && data->argumentVector[argument_count])
+	{
+	argument_count++;
+	}
+	data->argumentcount = argument_count;
 
-			info->argumentVector = malloc(sizeof(char *) * 2);
-			if (info->argumentVector)
-			{
-				info->argumentVector[0] = _strdup(info->argumentCount);
-				info->argumentVector[1] = NULL;
-			}
-		}
-		for (i = 0; info->argumentVector && info->argumentVector[i]; i++)
-			;
-		info->argumentcount = i;
-
-		replace_alias(info);
-		replace_vars(info);
+	replace_alias(data);
+	replace_vars(data);
 	}
 }
+
 
 /**
  * free_info - frees info_t struct fields
