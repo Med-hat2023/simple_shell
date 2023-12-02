@@ -211,7 +211,7 @@ int initializeEnvironmentList(info_t *inputInfo);
 
 /* toem_getenv.c */
 char **sync_and_get_environment(info_t *data);
-int _unsetenv(info_t *, char *);
+int remove_environment_variable(info_t *data, char *variable);
 int _setenv(info_t *, char *, char *);
 
 /* toem_history.c */

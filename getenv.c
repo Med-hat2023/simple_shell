@@ -6,7 +6,8 @@
  * @data: Structure containing potential arguments.
  * Used to maintain
  *	constant function prototype.
- * Return: Pointer to an array of strings representing the environment variables.
+ * Return: Pointer to an array of strings representing
+ * the environment variables.
  */
 char **sync_and_get_environment(info_t *data)
 {
@@ -20,35 +21,36 @@ char **sync_and_get_environment(info_t *data)
 }
 
 /**
- * _unsetenv - Remove an environment variable
- * @info: Structure containing potential arguments. Used to maintain
+ * remove_environment_variable - Removes an environment variable
+ * @data: Structure containing potential arguments. Used to maintain
  *	constant function prototype.
- *	Return: 1 on delete, 0 otherwise
- * @var: the string env var property
+ * @variable: The string representing the environment variable to remove.
+ * Return: 1 if the variable is deleted, 0 otherwise.
  */
-int _unsetenv(info_t *info, char *var)
+int remove_environment_variable(info_t *data, char *variable)
 {
-	list_t *node = info->environmentVariables;
-	size_t i = 0;
-	char *p;
+	list_t *current_node = data->environmentVariables;
+	size_t index = 0;
+	char *position;
 
-	if (!node || !var)
-		return (0);
+	if (!current_node || !variable)
+	return (0);
 
-	while (node)
+	do {
+	position = starts_with(current_node->string, variable);
+	if (position && *position == '=')
 	{
-		p = starts_with(node->string, var);
-		if (p && *p == '=')
-		{
-			info->env_changed = delete_node_at_index(&(info->environmentVariables), i);
-			i = 0;
-			node = info->environmentVariables;
-			continue;
-		}
-		node = node->next;
-		i++;
+	data->env_changed = delete_node_at_index(&
+			(data->environmentVariables), index);
+	index = 0;
+	current_node = data->environmentVariables;
+	continue;
 	}
-	return (info->env_changed);
+	current_node = current_node->next;
+	index++;
+	} while (current_node);
+
+	return (data->env_changed);
 }
 
 /**

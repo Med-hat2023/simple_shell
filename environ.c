@@ -86,7 +86,7 @@ int removeEnvironmentVariable(info_t *information)
 	return (1);
 	} do
 	{
-	_unsetenv(information, information->argumentVector[index]);
+	remove_environment_variable(information, information->argumentVector[index]);
 	index++;
 	} while (index <= information->argumentcount);
 
