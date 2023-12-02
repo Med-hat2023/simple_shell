@@ -138,7 +138,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argumentVector, get_environ(info)) == -1)
+		if (execve(info->path, info->argumentVector, sync_and_get_environment(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)

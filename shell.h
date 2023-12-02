@@ -210,7 +210,7 @@ int removeEnvironmentVariable(info_t *information);
 int initializeEnvironmentList(info_t *inputInfo);
 
 /* toem_getenv.c */
-char **get_environ(info_t *);
+char **sync_and_get_environment(info_t *data);
 int _unsetenv(info_t *, char *);
 int _setenv(info_t *, char *, char *);
 
