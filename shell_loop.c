@@ -28,10 +28,10 @@ int hsh(info_t *info, char **av)
 		}
 		else if (checkInteractiveMode(info))
 			_putchar('\n');
-		free_info(info, 0);
+		releaseDataaResources(info, 0);
 	}
 	write_history(info);
-	free_info(info, 1);
+	releaseDataaResources(info, 1);
 	if (!checkInteractiveMode(info) && info->exitStatus)
 		exit(info->exitStatus);
 	if (builtin_ret == -2)
@@ -140,7 +140,7 @@ void fork_cmd(info_t *info)
 	{
 		if (execve(info->directory, info->argumentVector, sync_and_get_environment(info)) == -1)
 		{
-			free_info(info, 1);
+			releaseDataaResources(info, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);

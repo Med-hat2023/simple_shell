@@ -50,30 +50,45 @@ void configureInfo(info_t *data, char **arguments)
 
 
 /**
- * free_info - frees info_t struct fields
- * @info: struct address
- * @all: true if freeing all fields
+ * releaseDataaResources - frees resources allocated for dataa_t struct
+ * @dataa: struct address
+ * @freeAll: true if freeing all fields
  */
-void free_info(info_t *info, int all)
+void releaseDataaResources(info_t *dataa, int freeAll)
+
 {
-	ffree(info->argumentVector);
-	info->argumentVector = NULL;
-	info->directory = NULL;
-	if (all)
+	ffree(dataa->argumentVector);
+	dataa->argumentVector = NULL;
+	dataa->directory = NULL;
+
+	if (freeAll)
 	{
-		if (!info->cmd_buf)
-			free(info->argumentCount);
-		if (info->environmentVariables)
-			free_list(&(info->environmentVariables));
-		if (info->commandList)
-			free_list(&(info->commandList));
-		if (info->alternateName)
-			free_list(&(info->alternateName));
-		ffree(info->environ);
-			info->environ = NULL;
-		bfree((void **)info->cmd_buf);
-		if (info->readfd > 2)
-			close(info->readfd);
-		_putchar(CLEAR_BUFFER);
+	if (!dataa->cmd_buf)
+	{
+	free(dataa->argumentCount);
+	}
+	else
+	{
+	if (dataa->environmentVariables)
+	free_list(&(dataa->environmentVariables));
+
+	if (dataa->commandList)
+	free_list(&(dataa->commandList));
+
+	if (dataa->alternateName)
+	free_list(&(dataa->alternateName));
+
+	ffree(dataa->environ);
+	dataa->environ = NULL;
+
+	bfree((void **)dataa->cmd_buf);
+
+	if (dataa->readfd > 2)
+	close(dataa->readfd);
+
+	_putchar(CLEAR_BUFFER);
+	}
 	}
 }
+
+
