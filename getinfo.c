@@ -53,31 +53,30 @@ void configureInfo(info_t *data, char **arguments)
  * releaseDataaResources - frees resources allocated for dataa_t struct
  * @dataa: struct address
  * @freeAll: true if freeing all fields
+ * REturn:void
  */
 void releaseDataaResources(info_t *dataa, int freeAll)
-
 {
 	ffree(dataa->argumentVector);
 	dataa->argumentVector = NULL;
 	dataa->directory = NULL;
 
-	if (freeAll)
-	{
-	if (!dataa->cmd_buf)
+	if (freeAll && !dataa->cmd_buf)
 	{
 	free(dataa->argumentCount);
 	}
-	else
-	{
-	if (dataa->environmentVariables)
+
+	if (freeAll && dataa->environmentVariables)
 	free_list(&(dataa->environmentVariables));
 
-	if (dataa->commandList)
+	if (freeAll && dataa->commandList)
 	free_list(&(dataa->commandList));
 
-	if (dataa->alternateName)
+	if (freeAll && dataa->alternateName)
 	free_list(&(dataa->alternateName));
 
+	if (freeAll)
+	{
 	ffree(dataa->environ);
 	dataa->environ = NULL;
 
@@ -88,7 +87,5 @@ void releaseDataaResources(info_t *dataa, int freeAll)
 
 	_putchar(CLEAR_BUFFER);
 	}
-	}
 }
-
 
