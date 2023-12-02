@@ -81,8 +81,8 @@ currentDir = getcwd(directoryBuffer, 1024);
 	}
 	else
 	{
-	_setenv(shellInfo, "OLDPWD", findEnvironmentValue(shellInfo, "PWD="));
-	_setenv(shellInfo, "PWD", getcwd(directoryBuffer, 1024));
+	initialize_or_modify_environment_variable(shellInfo, "OLDPWD", findEnvironmentValue(shellInfo, "PWD="));
+	initialize_or_modify_environment_variable(shellInfo, "PWD", getcwd(directoryBuffer, 1024));
 	}
 	return (0);
 }

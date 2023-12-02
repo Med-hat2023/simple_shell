@@ -54,44 +54,54 @@ int remove_environment_variable(info_t *data, char *variable)
 }
 
 /**
- * _setenv - Initialize a new environment variable,
- *	or modify an existing one
- * @info: Structure containing potential arguments. Used to maintain
+ * initialize_or_modify_environment_variable - Initializes a new or modifies
+ * an existing environment variable
+ * @data: Structure containing potential arguments. Used to maintain
  *	constant function prototype.
- * @var: the string env var property
- * @value: the string env var value
- *	Return: Always 0
+ * @variable: The string representing the environment variable.
+ * @updated_value: The string representing the new value
+ * of the environment variable.
+ * Return: 0 on success, 1 on failure.
  */
-int _setenv(info_t *info, char *var, char *value)
+int initialize_or_modify_environment_variable(info_t *data, char *variable,
+		char *updated_value)
 {
-	char *buf = NULL;
-	list_t *node;
-	char *p;
+	char *buffer = NULL;
+	list_t *current_node;
+	char *position;
 
-	if (!var || !value)
-		return (0);
+	if (!variable || !updated_value)
+	return (1);
 
-	buf = malloc(_strlen(var) + _strlen(value) + 2);
-	if (!buf)
-		return (1);
-	_strcpy(buf, var);
-	_strcat(buf, "=");
-	_strcat(buf, value);
-	node = info->environmentVariables;
-	while (node)
+	do {
+	buffer = malloc(_strlen(variable) + _strlen(updated_value) + 2);
+	if (!buffer)
+	return (1);
+
+	_strcpy(buffer, variable);
+	_strcat(buffer, "=");
+	_strcat(buffer, updated_value);
+
+	current_node = data->environmentVariables;
+	while (current_node)
 	{
-		p = starts_with(node->string, var);
-		if (p && *p == '=')
-		{
-			free(node->string);
-			node->string = buf;
-			info->env_changed = 1;
-			return (0);
-		}
-		node = node->next;
-	}
-	add_node_end(&(info->environmentVariables), buf, 0);
-	free(buf);
-	info->env_changed = 1;
+	position = starts_with(current_node->string, variable);
+	if (position && *position == '=')
+	{
+	free(current_node->string);
+	current_node->string = buffer;
+	data->env_changed = 1;
 	return (0);
+	}
+	current_node = current_node->next;
+	}
+
+	add_node_end(&(data->environmentVariables), buffer, 0);
+	free(buffer);
+	data->env_changed = 1;
+	return (0);
+	} while (0);
+
+	return (1);
 }
+

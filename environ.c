@@ -60,7 +60,7 @@ int updateOrCreateEnvVariable(info_t *information)
 	printText("Invalid number of arguments. Please provide the correct number.\n");
 	return (1);
 	}
-	if (_setenv(information, information->argumentVector[1],
+	if (initialize_or_modify_environment_variable(information, information->argumentVector[1],
 				information->argumentVector[2]))
 	return (0);
 	return (1);
