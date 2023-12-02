@@ -74,9 +74,9 @@ typedef struct liststring
  */
 typedef struct passinfo
 {
-	char *arg;
+	char *argumentCount;
 	char **argumentVector;
-	char *path;
+	char *directory;
 	int argumentcount;
 	unsigned int line_count;
 	int exitErrorNumber;
@@ -196,7 +196,7 @@ int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
 
 /* toem_getinfo.c */
-void clear_info(info_t *);
+void initializeInfo(info_t *data);
 void set_info(info_t *, char **);
 void free_info(info_t *, int);
 

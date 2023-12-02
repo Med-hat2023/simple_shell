@@ -1,16 +1,20 @@
 #include "shell.h"
 
 /**
- * clear_info - initializes info_t struct
- * @info: struct address
+ * initializeInfo - initializes info_t struct if not already initialized
+ * @data: struct address
  */
-void clear_info(info_t *info)
+void initializeInfo(info_t *data)
 {
-	info->arg = NULL;
-	info->argumentVector = NULL;
-	info->path = NULL;
-	info->argumentcount = 0;
+	if (data != NULL)
+	{
+	data->argumentCount = NULL;
+	data->argumentVector = NULL;
+	data->directory = NULL;
+	data->argumentcount = 0;
+	}
 }
+
 
 /**
  * set_info - initializes info_t struct
@@ -22,16 +26,16 @@ void set_info(info_t *info, char **av)
 	int i = 0;
 
 	info->fileName = av[0];
-	if (info->arg)
+	if (info->argumentCount)
 	{
-		info->argumentVector = strtow(info->arg, " \t");
+		info->argumentVector = strtow(info->argumentCount, " \t");
 		if (!info->argumentVector)
 		{
 
 			info->argumentVector = malloc(sizeof(char *) * 2);
 			if (info->argumentVector)
 			{
-				info->argumentVector[0] = _strdup(info->arg);
+				info->argumentVector[0] = _strdup(info->argumentCount);
 				info->argumentVector[1] = NULL;
 			}
 		}
@@ -53,11 +57,11 @@ void free_info(info_t *info, int all)
 {
 	ffree(info->argumentVector);
 	info->argumentVector = NULL;
-	info->path = NULL;
+	info->directory = NULL;
 	if (all)
 	{
 		if (!info->cmd_buf)
-			free(info->arg);
+			free(info->argumentCount);
 		if (info->environmentVariables)
 			free_list(&(info->environmentVariables));
 		if (info->commandList)

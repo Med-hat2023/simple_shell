@@ -14,7 +14,7 @@ int hsh(info_t *info, char **av)
 
 	while (r != -1 && builtin_ret != -2)
 	{
-		clear_info(info);
+	initializeInfo(info);
 		if (checkInteractiveMode(info))
 			_puts("$ ");
 		writeToStderr(CLEAR_BUFFER);
@@ -88,14 +88,14 @@ void find_cmd(info_t *info)
 	char *path = NULL;
 	int i, k;
 
-	info->path = info->argumentVector[0];
+	info->directory = info->argumentVector[0];
 	if (info->linecount_flag == 1)
 	{
 		info->line_count++;
 		info->linecount_flag = 0;
 	}
-	for (i = 0, k = 0; info->arg[i]; i++)
-		if (!isDelimiter(info->arg[i], " \t\n"))
+	for (i = 0, k = 0; info->argumentCount[i]; i++)
+		if (!isDelimiter(info->argumentCount[i], " \t\n"))
 			k++;
 	if (!k)
 		return;
@@ -103,7 +103,7 @@ void find_cmd(info_t *info)
 	path = find_path(info, findEnvironmentValue(info, "PATH="), info->argumentVector[0]);
 	if (path)
 	{
-		info->path = path;
+		info->directory = path;
 		fork_cmd(info);
 	}
 	else
@@ -111,7 +111,7 @@ void find_cmd(info_t *info)
 		if ((checkInteractiveMode(info) || findEnvironmentValue(info, "PATH=")
 			|| info->argumentVector[0][0] == '/') && is_cmd(info, info->argumentVector[0]))
 			fork_cmd(info);
-		else if (*(info->arg) != '\n')
+		else if (*(info->argumentCount) != '\n')
 		{
 			info->exitStatus = 127;
 			displayErrorInfo(info, "not found\n");
@@ -138,7 +138,7 @@ void fork_cmd(info_t *info)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(info->path, info->argumentVector, sync_and_get_environment(info)) == -1)
+		if (execve(info->directory, info->argumentVector, sync_and_get_environment(info)) == -1)
 		{
 			free_info(info, 1);
 			if (errno == EACCES)

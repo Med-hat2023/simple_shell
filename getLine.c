@@ -55,7 +55,7 @@ ssize_t get_input(info_t *info)
 	static char *buf; /* the ';' command chain buffer */
 	static size_t i, j, len;
 	ssize_t r = 0;
-	char **buf_p = &(info->arg), *p;
+	char **buf_p = &(info->argumentCount), *p;
 
 	_putchar(CLEAR_BUFFER);
 	r = input_buf(info, &buf, &len);
