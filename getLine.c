@@ -1,51 +1,59 @@
 #include "shell.h"
 
 /**
- * input_buf - buffers chained commands
- * @info: parameter struct
- * @buf: address of buffer
- * @len: address of len var
+ * fetch_input_commands - into a buffer, updating information.
  *
- * Return: bytes read
+ * @data: Pointer to the parameter struct.
+ * @buffer: Address of the buffer to store input commands.
+ * @length_pointer: Address of the length variable for the buffer.
+ * Return: The number of bytes read.
  */
-ssize_t input_buf(info_t *info, char **buf, size_t *len)
+ssize_t fetch_input_commands(info_t *data, char **buffer,
+		size_t *length_pointer)
 {
-	ssize_t r = 0;
-	size_t len_p = 0;
+	ssize_t bytesRead = 0;
+	size_t lengthPointer = 0;
 
-	if (!*len) /* if nothing left in the buffer, fill it */
+	if (!(*length_pointer)) /* if nothing left in the buffer, fill it */
 	{
-		/*bfree((void **)info->cmd_buf);*/
-		free(*buf);
-		*buf = NULL;
-		signal(SIGINT, sigintHandler);
-#if USE_GETLINE
-		r = getline(buf, &len_p, stdin);
+	/*bfree((void **)data->cmd_buf);*/
+	free(*buffer);
+	*buffer = NULL;
+	signal(SIGINT, sigintHandler);
+
+#if USE_GET_LINE
+	bytesRead = getline(buffer, &lengthPointer, stdin);
 #else
-		r = _getline(info, buf, &len_p);
+	bytesRead = _getline(data, buffer, &lengthPointer);
 #endif
-		if (r > 0)
-		{
-			if ((*buf)[r - 1] == '\n')
-			{
-				(*buf)[r - 1] = '\0'; /* remove trailing newline */
-				r--;
-			}
-			info->linecount_flag = 1;
-			deactivateHash(*buf);
-			build_history_list(info, *buf, info->histcount++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
-			{
-				*len = r;
-				info->cmd_buf = buf;
-			}
-		}
+
+	if (bytesRead > 0)
+	{
+	if ((*buffer)[bytesRead - 1] == '\n')
+	{
+	(*buffer)[bytesRead - 1] = '\0'; /* remove trailing newline */
+	bytesRead--;
 	}
-	return (r);
+
+	data->linecount_flag = 1;
+	deactivateHash(*buffer);
+	build_history_list(data, *buffer, data->histcount++);
+	if (strchr(*buffer, ';'))
+	{
+	*length_pointer = bytesRead;
+	data->cmd_buf = buffer;
+	}
+	else
+	{
+	*length_pointer = bytesRead;
+	}
+	}
+	}
+return (bytesRead);
 }
 
 /**
- * get_input - gets a line minus the newline
+* get_input - gets a line minus the newline
  * @info: parameter struct
  *
  * Return: bytes read
@@ -58,7 +66,7 @@ ssize_t get_input(info_t *info)
 	char **buf_p = &(info->argumentCount), *p;
 
 	_putchar(CLEAR_BUFFER);
-	r = input_buf(info, &buf, &len);
+	r = fetch_input_commands(info, &buf, &len);
 	if (r == -1) /* EOF */
 		return (-1);
 	if (len)	/* we have commands left in the chain buffer */

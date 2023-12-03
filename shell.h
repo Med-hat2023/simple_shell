@@ -191,6 +191,7 @@ int display_entry(list_t *displayed_entry);
 int execute_alias_operations(info_t *arguments_info);
 
 /*toem_getline.c */
+ssize_t fetch_input_commands(info_t *data, char **buffer, size_t *length_pointer);
 ssize_t get_input(info_t *);
 int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
